@@ -7,6 +7,9 @@ def greet_user(name):
     In addition we want to print a welcome message that includes the day of the week.
     """
     message= "hello " + name + "!"
+    x=datetime.datetime.now()
+    day_of_week= x.strftime("%A")
+    message += " Welcome! Happy" + day_of_week + "!"
     return message
 
 user_name= input("Please enter your name: ")
