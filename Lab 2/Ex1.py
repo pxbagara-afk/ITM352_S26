@@ -8,3 +8,5 @@ print("You entered:", value_entered)
 value_as_integer = int(value_entered)
 squared_value = value_as_integer ** 2
 print("The square of the number you entered is:", squared_value)
+print(f "The square of {value_as_integer} is {squared_value}.")
+# Note: The above code does not handle invalid input or out-of-range values.
