@@ -9,9 +9,7 @@ print(responses)
 
 # Alternative: do the same using list slicing and the + operator (no .insert)
 responses2 = [5, 7, 3, 8]
-# Insert 6 at index 2 by concatenating slices and a single-element list
 responses2 = responses2[:2] + [6] + responses2[2:]
-# Append 0 to the end
 responses2.append(0)
 print(responses2)
 
