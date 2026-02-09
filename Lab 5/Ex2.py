@@ -26,3 +26,5 @@ taxiTrips = {
     "fare": trip_fare,
 }
 print(f"The third trip was {taxiTrips['miles'][2]} miles.")  # Prints the third trip's details.
+
+print(f"The fare for the third trip was ${taxiTrips['fare'][2]:.2f}.")  # Corrected: uses square brackets and correct key name.

@@ -13,6 +13,6 @@ print(taxiTripInfo)
 print(taxiTripInfo["trip_miles"])  # prints the numeric distance (1.1)
 
 # The following line is incorrect: using parentheses attempts to call the
-# dictionary like a function and will raise a TypeError.
+# dictionary like a function and will raise a TypeError. Python might think its a function
 # Correct form would be: print(taxiTripInfo["trip_miles"])
 print(taxiTripInfo(trip_miles))

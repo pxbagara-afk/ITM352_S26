@@ -16,3 +16,4 @@ tirp_num =input("What trip do you wanna know about? (1-4): ")
 trip_index=(int(tirp_num)-1)
 print(f"Duration:: {list(trips.keys())[trip_index]} miles")
 print(f"fare:: ${list(trips.values())[trip_index]:.2f}")
+
