@@ -28,7 +28,3 @@ taxiTrips = {
 print(f"The third trip was {taxiTrips['miles'][2]} miles.")  # Prints the third trip's details.
 
 print(f"The fare for the third trip was ${taxiTrips['fare'][2]:.2f}.")  # Corrected: uses square brackets and correct key name.
-# Demonstrate numeric advantages: totals and averages are easy with numbers
-total_fares = sum(taxiTrips['fare'])
-print(f"Total fares: ${total_fares:.2f}")
-print(f"Average fare: ${total_fares / len(taxiTrips['fare']):.2f}")
