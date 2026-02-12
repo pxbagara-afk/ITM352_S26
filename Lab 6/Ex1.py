@@ -1,7 +1,7 @@
-emotions = ("Happy", "Sad", "Fear", "happy")
+emotions = ("happy", "sad", "fear", "happy")
 
-
-result = emotions [-1] == "happy" and len(emotions) > 3
-if (result) == True:
-    print("true")
-else:     print("false")
+# Using an if-statement to print the required result
+if len(emotions) > 3 and emotions[-1] == "happy":
+	print("true")
+else:
+	print("false")
