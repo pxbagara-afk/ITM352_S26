@@ -11,3 +11,4 @@ def get_character_frequencies(input_string):
 if __name__ == "__main__":
     mydict = get_character_frequencies("Snow White and the Seven Dwarves")
     print(mydict)
+sorted_bykeys= dict(sorted(mydict.items()))
