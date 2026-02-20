@@ -10,3 +10,9 @@ if total_spent > budget:
 else:       print("This purchase is within budget", purchase)
 
 
+
+#On your own
+def check_budget (purchase,limit):
+    if purchase > limit:
+        print("This purchase is over budget", purchase)
+    else:       print("This purchase is within budget", purchase)
