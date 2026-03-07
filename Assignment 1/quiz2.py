@@ -1,11 +1,11 @@
-#Quz game. Second verion
-#Name: Paul Bagara
-#Date Feb 24, 2026
-#Make a list with the questions and correct answers
+# Quiz game. Second version
+# Name: Paul Bagara
+# Date Feb 24, 2026
+
 questions = [
-    ("What is the airspeed of a unladen swallow n miles/hr?", "12"),
-    ("What is the capital of Texas?", "Austin")
-    ("The last supper was a painting by which artist?", "Leonardo da Vinci")
+    ("What is the airspeed of a unladen swallow n miles/hr? ", "12"),
+    ("What is the capital of Texas? ", "Austin"),
+    ("The last supper was a painting by which artist? ", "Leonardo da Vinci")
 ]
 
 for question, correct_answer in questions:
