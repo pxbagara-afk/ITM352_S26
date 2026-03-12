@@ -1,0 +1,52 @@
+[
+  {
+    "question": "What is the capital of France?",
+    "options": {
+      "a": "Berlin",
+      "b": "Madrid",
+      "c": "Paris",
+      "d": "Rome"
+    },
+    "answer": "c"
+  },
+  {
+    "question": "Which language is primarily used for Android app development?",
+    "options": {
+      "a": "Swift",
+      "b": "Kotlin",
+      "c": "Ruby",
+      "d": "C#"
+    },
+    "answer": "b"
+  },
+  {
+    "question": "What does CPU stand for?",
+    "options": {
+      "a": "Central Process Unit",
+      "b": "Central Processing Unit",
+      "c": "Computer Personal Unit",
+      "d": "Control Processing Unit"
+    },
+    "answer": "b"
+  },
+  {
+    "question": "Which planet is known as the Red Planet?",
+    "options": {
+      "a": "Venus",
+      "b": "Mars",
+      "c": "Jupiter",
+      "d": "Saturn"
+    },
+    "answer": "b"
+  },
+  {
+    "question": "Which data structure uses FIFO (First In First Out)?",
+    "options": {
+      "a": "Stack",
+      "b": "Tree",
+      "c": "Queue",
+      "d": "Graph"
+    },
+    "answer": "c"
+  }
+]
