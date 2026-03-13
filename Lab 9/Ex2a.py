@@ -1,26 +1,44 @@
-# Read in a CSV file of employee data and calculate the Average Salary, 
-# Max Salary, and Min Salary
+import os
 import csv
 
-csv_filename = "Employee_data.csv"
+filename = os.path.join(os.path.dirname(__file__), "Employee_data.csv")
 salaries = []
 
-with open(csv_filename, newline='') as csv_file:
-    reader = csv.reader(csv_file)
-    headers = next(reader)  # Skip header row
-    print(f"Headers: {headers}")
+if os.path.exists(filename):
+    with open(filename, newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        try:
+            headers = next(reader)  # Skip the header row
+        except StopIteration:
+            print("CSV file is empty.")
+            headers = []
 
-    salary_index = headers.index("Annual_Salary")  # Find the index of the Salary column
-    for row_data in reader:
-        salaries.append(float(row_data[salary_index]))  # Use the salary index
+        if headers:
+            try:
+                salary_index = headers.index("Annual_Salary")
+            except ValueError:
+                print("Header 'Annual_Salary' not found in CSV headers:", headers)
+                salary_index = None
 
-if salaries:
-    average_salary = sum(salaries) / len(salaries)
-    max_salary = max(salaries)
-    min_salary = min(salaries)
+            print(headers)
+            for row in reader:
+                print(row)
+                if salary_index is not None and len(row) > salary_index:
+                    try:
+                        salaries.append(float(row[salary_index]))
+                    except ValueError:
+                        print("Skipping non-numeric salary:", row[salary_index])
+        
+    print(salaries)
+    if salaries:
+        average_salary = sum(salaries) / len(salaries)
+        print(f"Average Salary: ${average_salary:.2f}")
+        max_salary = max(salaries)
+        print(f"Maximum Salary: ${max_salary:.2f}")
+        min_salary = min(salaries)
+        print(f"Minimum Salary: ${min_salary:.2f}")
+    else:
+        print("No salary data found.")
 
-    print(f"Average Salary: ${average_salary:.2f}")
-    print(f"Maximum Salary: ${max_salary:.2f}")
-    print(f"Minimum Salary: ${min_salary:.2f}")
 else:
-    print("No salary data found.")
+    print(f"Error: The file '{filename}' does not exist.")

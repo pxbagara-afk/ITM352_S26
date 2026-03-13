@@ -1,5 +1,5 @@
-with open("names.txt", "r") as file_object:
-    while (line := file_object.readline()):
-        print(line)
+# Open the file names.txt and read its contents and print the number of names
 
-  #  print(f"Number of names: {len(names_list)}")
+with open("names.txt") as file_object:
+    while (line := file_object.readline()):
+        print(line.strip())
