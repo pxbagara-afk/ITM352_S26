@@ -7,6 +7,6 @@ with open("names.txt") as file_object:
 
 with open("names.txt", "a") as file_object:    
     print("appending new name to the file...")
-    file_object.write("Adams, Amy\n")
-    contents_list.append("Adams, Amy\n")
+    file_object.write("Paul, Bagara\n")
+    contents_list.append("Paul Bagara\n")
     print(f"Number of names: {len(contents_list)}") 
