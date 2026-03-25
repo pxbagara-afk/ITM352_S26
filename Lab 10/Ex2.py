@@ -1,21 +1,26 @@
-# ...existing code...
+# Create a dataframe from individual lists.
+# Do some simple statistics on the data.
+import pandas as pd
+
 # List of individuals' ages
 ages = [25, 30, 22, 35, 28, 40, 50, 18, 60, 45]
 
-# Lists of individuals' names and genders
+
+#Lists of individuals' names and genders
 names = ["Joe", "Jaden", "Max", "Sidney", "Evgeni", "Taylor", "Pia", "Luis", "Blanca", "Cyndi"]
 gender = ["M", "M", "M", "F", "M", "F", "F", "M", "F", "F"]
 
-import pandas as pd
+# Create a dictionary from the lists of ages and genders
+dict = zip(ages, gender)
+#print (list(dict))
 
-# create a dataframe from the lists
-data = {"age": ages, "gender": gender}
-df = pd.DataFrame(data, index=names)
-
+# Create a DataFrame from the dictionary
+df = pd.DataFrame(dict, index=names, columns=["Age", "Gender"])
 print(df)
 
-summary=df.describe()
+summary = df.describe()
 print(summary)
 
-average_age_by_gender = df.groupby("gender")["age"].mean()
-print("Average age by gender:", average_age_by_gender)
+# Calculate average age by gender
+average_age_by_gender = df.groupby("Gender")["Age"].mean()
+print("\nAverage age by gender: \n", average_age_by_gender)

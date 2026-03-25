@@ -27,3 +27,5 @@ df_large_properties= df_large_properties.dropna()
 df_large_properties = df_large_properties.drop_duplicates()
 
 print(df_large_properties.head(10))
+
+df_large_properties = df_large_properties[df_large_properties["sale_price"] > 0]
