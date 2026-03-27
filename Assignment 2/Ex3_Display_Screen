@@ -1,0 +1,94 @@
+#Used this file to clean up files and to organize code. Also added in display screen that only has (Show the first n rows and Exit)
+
+import pandas as pd
+from time import time
+
+def sales_data():
+    """Loads the CSV, tracks time, and handles initial data cleaning."""
+    try:
+        #Start the timer and read the file
+        start_time = time()
+        df_sales = pd.read_csv("sales_data.csv")
+
+        #Calculate shape and timing
+        current_shape = df_sales.shape
+        end_time = time()
+        load_time = end_time - start_time
+        
+        print(f"The sales data has {current_shape[0]} rows and {current_shape[1]} columns.")
+        print("CSV file loaded successfully.")
+        print(f"Time taken to load the CSV file: {load_time:.2f} seconds.")
+
+        #Clean missing data
+        df_sales = df_sales.fillna(0)
+        print("Missing data has been filled with 0.")
+        
+        #Return the dataframe so main() can use it
+        return df_sales
+
+    except FileNotFoundError:
+        print("Error: sales_data.csv file not found.")
+        return None
+
+def show_rows(df_sales):
+    """Prompts the user to view a specific number of rows."""
+    while True:
+        user_input = input("\nEnter rows to display ('all', a number, or Enter to skip): ").strip().lower()
+        
+        if user_input == "":
+            print("Preview skipped.")
+            break
+        elif user_input == "all":
+            print(df_sales)
+            break
+        elif user_input.isdigit():
+            num_rows = int(user_input)
+            if num_rows > 0:
+                print(df_sales.head(num_rows))
+                break
+            else:
+                print("Please enter a number greater than 0.")
+        else:
+            print("Invalid input. Please enter a positive integer, 'all', or press Enter.")
+
+def exit_program(df_sales):
+    print("Exiting the program. Goodbye!")
+    exit(0)
+
+def display_menu(df_sales):
+    """Main menu loop using a dispatch table (tuple of tuples)."""
+    # Simply add new functions to this tuple to expand your dashboard
+    menu_options = (
+        ("Show the first n rows of sales data", show_rows),
+        ("Exit", exit_program)
+    )
+
+    while True:
+        print("\n--- Sales Data Dashboard ---")
+        for i, (label, _) in enumerate(menu_options, 1):
+            print(f"{i}. {label}")
+        
+        choice = input("\nSelect an option (1-2: ").strip()
+        
+        if choice.isdigit():
+            idx = int(choice) - 1
+            if 0 <= idx < len(menu_options):
+                # This executes the function and passes the dataframe to it
+                menu_options[idx][1](df_sales)
+            else:
+                print(f"Please select a number between 1 and {len(menu_options)}.")
+        else:
+            print("Invalid input. Please enter a number.")
+
+            
+
+def main():
+    #load data
+    df_sales = sales_data()
+    
+    # Only start the menu if the file was found and loaded
+    if df_sales is not None:
+        display_menu(df_sales)
+
+if __name__ == "__main__":
+    main()
