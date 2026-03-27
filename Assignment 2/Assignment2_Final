@@ -1,3 +1,4 @@
+#Combination of Ex3a and Ex4 with some edits to make it more organized such as adding a option to create custom pivot table
 import pandas as pd
 import sys
 from time import time
@@ -40,7 +41,7 @@ def sales_data():
         print("Error: sales_data.csv file not found.")
         return None
 
-# --- Custom Pivot Builder Requirements ---
+#Custom Pivot Builder Requirements
 
 # These lists define what the user can choose from 
 Row_Options = ['sales_region', 'product_category', 'employee_id']

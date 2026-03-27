@@ -6,9 +6,6 @@ from time import time
 # Requirement #9: Empty dictionary to store pivot table results for tracking
 session_results = {}
 
-#Make sure all data on scr3een
-pd.set_option('display.max_columns', None)
-pd.set_option('display.width', 1000)
 
 # This is used to load the CSV file data, time calcualtion, printing the inforamtion of the CSV file, and cleaning out mssing data with 0
 # Used AI to calculate time taken to load the CSV file and print it in seconds with 2 decimal places (prompt A.I with "Calculate time taken to load the CSV file and print it in seconds with 2 decimal places")
@@ -50,6 +47,7 @@ def sales_data():
         return None
 
 # requirement 7: function to filter by date range
+#Use A.I to create a function that filters the data frame by a user specified date range (A.I prompt: How do I create a function that filters a pandas data frame by a user specified date range?)
 def filter_by_date_range(pivot_table):
     print("\nPlease select a date range to filter the data. Use proper date format (DD/MM/YYYY)")
 
@@ -63,10 +61,10 @@ def filter_by_date_range(pivot_table):
             if start > end:
                 print("Start date cannot be after end date. Try again.")
                 continue
-            filtered_df = pivot_table[(pivot_table['order_date'] >= start) & # filter data frame
+            filtered_df = pivot_table[(pivot_table['order_date'] >= start) & # filter data start and end date
                                       (pivot_table['order_date'] <= end)]
             if filtered_df.empty: # check if filtered data frame is empty
-                print("⚠️ No data found in that date range. Try again.")
+                print(" No data found in that date range. Try again.")
                 continue
             print(f"Data filtered to {len(filtered_df)} rows between {start_date} and {end_date}.") # inform user of result
             return filtered_df
@@ -74,9 +72,12 @@ def filter_by_date_range(pivot_table):
             print("Invalid date format. Please use DD/MM/YYYY.")
 
 # requirement 1: function to handle Excel export (Applied globally to all analysis functions)
+#Used A.I to make template of function to handle exporting any pivot table to Excel with user input for filename and error handling (A.I prompt: How do I create a function that handles exporting any pandas data frame to Excel with user input for filename and error handling?)
 def ask_to_export(pivot_table):
     while True:
+        #Ask question if you want to export
         export_choice = input("\nWould you like to export these results to an Excel file? (y/n): ").strip().lower()
+        #If answer is y then it will ask user to name file and export as .xlsx
         if export_choice == 'y':
             filename = input("Enter a filename (without extension): ").strip() #asks user to input filename
             if not filename: 
@@ -89,13 +90,13 @@ def ask_to_export(pivot_table):
             except Exception as e: # catch any errors during export
                 print(f"Error exporting to Excel: {e} :(")
             break
-        elif export_choice == 'n': # user chose not to export
+        elif export_choice == 'n': # If no then not export and break loop
             print("Okay, not exporting.")
             break
         else:
             print("Please enter 'y' or 'n'.") # invalid input, ask again
 
-# --- Custom Pivot Builder Requirements ---
+#Custom Pivot Builder Requirements
 
 # These lists define what the user can choose from 
 Row_Options = ['sales_region', 'product_category', 'employee_id']
@@ -103,7 +104,7 @@ Column_Options = ['order_type', 'customer_type']
 Value_Options = ['quantity', 'unit_price', 'sales']
 Agg_Options = ['sum', 'mean','count']
 
-#    "Prints a list and returns the string value of the user's numeric choice."
+#  Prints a list and returns the string value of the user's numeric choice.
 #Use A.I to create a function that prints a list of options and returns the string value of the user's numeric choice (A.I prompt: How do I create a function that prints a list of options and returns the string value of the user's numeric choice?)
 #Also Used A.I for logical argument
 def User_choice(options, label):
@@ -279,7 +280,7 @@ def generate_custom_pivot_table(df_sales):
     except Exception as e:
         print(f"\n[Error] Could not generate table: {e}")
 
-# Requirement #9: Function to display all stored results from the dictionary
+# Requirement #10 Function to display all stored results from the dictionary
 def view_stored_results(df_sales):
     """Displays all pivot tables stored in the session dictionary."""
     if not session_results:
@@ -305,13 +306,13 @@ def exit_program(df_sales):
 #Is a list of tuples that has the name of the function and calls on that function if it is selected by the user.
 def display_menu(df_sales):
     menu_options = (
-        ("Show rows (Includes Export)", show_rows),
-        ("Total sales by region and order_type (WITH DATE FILTER & EXPORT)", total_sales_by_region_order_type),
-        ("Average sales by region, state and order_type (Includes Export)", avg_sales_by_region_state_type),
-        ("Sales by customer_type and order_type by state (Includes Export)", sales_by_customer_order_by_state),
-        ("Unique employees by region (Includes Export)", unique_employees_by_region),
-        ("BUILD A CUSTOM PIVOT TABLE (Includes Export)", generate_custom_pivot_table), # Integrated Custom Builder
-        ("VIEW ALL STORED RESULTS (Includes Export)", view_stored_results), # Requirement #9 display function
+        ("Show rows", show_rows),
+        ("Total sales by region and order_type (WITH DATE FILTER)", total_sales_by_region_order_type),
+        ("Average sales by region, state and order_type (", avg_sales_by_region_state_type),
+        ("Sales by customer_type and order_type by state ", sales_by_customer_order_by_state),
+        ("Unique employees by region", unique_employees_by_region),
+        ("BUILD A CUSTOM PIVOT TABLE", generate_custom_pivot_table), # Integrated Custom Builder
+        ("VIEW ALL STORED RESULTS", view_stored_results), # Requirement #9 display function
         ("Exit", exit_program),
     )
 
@@ -319,7 +320,7 @@ def display_menu(df_sales):
     #Used A.I to make this dashboard menu set up with prompt (Make me a dashboard menu that has options to show the first n rows of sales data and exit, and make it so that I can easily add more functions to the menu by just adding to a tuple of tuples)
     while True:
         # Keep track of which analytics have been done and List them above the menu
-        print("\n" + "-"*40)
+        print("\n" + "-"*40) #clears space between menu loops
         print("ANALYTICS COMPLETED THIS SESSION:")
         if not session_results:
             print("  (None)")

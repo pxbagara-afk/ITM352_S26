@@ -67,9 +67,11 @@ def exit_program(df_sales):
     sys.exit(0)
 
 
-#Start of piviot table for sales by region and order type
+#Start of reorganized table for sales by region and order type
 def total_sales_by_region_order_type(df_sales):
-    print("\nTotal sales by region and order_type:")
+    print("Total sales by region and order_type:")
+    #reorgnizes data into sales by region and order type with total sales as summed values, also accounts for missing data with 0 and adds totals for rows and columns
+    #used A.I to organize the pivot table code and logic statements (prompt A.I with "Organize the code and logic statements for a pivot table that shows total sales by region and order type, with totals for rows and columns, and handles missing data with 0")
     pivot = pd.pivot_table(
         df_sales,
         index='sales_region',
@@ -82,7 +84,8 @@ def total_sales_by_region_order_type(df_sales):
     )
     print(pivot)
 
-
+#Created function to sum up average by region 
+#Used A.I in order to calculate mean (A,I prompt: How do I calculate mean by a certain criteria like region and organize")
 def avg_sales_by_region_state_type(df_sales):
     print("\nAverage sales by region and order_type, with region-state breakdown:")
     pivot = pd.pivot_table(
@@ -95,6 +98,7 @@ def avg_sales_by_region_state_type(df_sales):
     )
     print(pivot)
 
+#Used same code as above but now by sales customer and changed mean to sum of sales. 
 
 def sales_by_customer_order_by_state(df_sales):
     print("\nSales by customer_type + order_type by state:")
@@ -107,6 +111,7 @@ def sales_by_customer_order_by_state(df_sales):
     )
     print(pivot)
 
+#Same code as above but now by quantity and sales
 
 def qty_price_by_region_product(df_sales):
     print("\nTotal quantity and sales by region and product_category:")
@@ -120,6 +125,7 @@ def qty_price_by_region_product(df_sales):
     )
     print(pivot)
 
+#Same code as above but now by order type and customer type by quantity and sales
 
 def qty_price_customer_order_customer_type(df_sales):
     print("\nTotal quantity and sales by order_type and customer_type:")
@@ -132,7 +138,7 @@ def qty_price_customer_order_customer_type(df_sales):
     )
     print(pivot)
 
-
+#Same code but now to find max and minimum price by product catagory 
 def max_min_price_by_category(df_sales):
     print("\nMax and min unit price by product_category:")
     pivot = pd.pivot_table(
@@ -143,7 +149,8 @@ def max_min_price_by_category(df_sales):
     )
     print(pivot)
 
-
+#Same code as above but for finding employee i.d that's unique by region
+#Used A.I to create filter for unique employee i.d by region (A.I prompt: How do I create a pivot table that shows the number of unique employee i.d by region?)
 def unique_employees_by_region(df_sales):
     print("\nNumber of unique employees by sales_region:")
     pivot = pd.pivot_table(
@@ -155,7 +162,8 @@ def unique_employees_by_region(df_sales):
     pivot = pivot.rename(columns={'employee_id': 'unique_employee_count'})
     print(pivot)
 
-
+#This is the display menu that shows the options
+#Is a list of tuples that has the name of the function and calls on that function if it is selected by the user.
 def display_menu(df_sales):
     menu_options = (
         ("Show the first n rows of sales data", show_rows),
@@ -189,11 +197,12 @@ def display_menu(df_sales):
         else:
             print("Invalid input. Please enter a number.")
 
+#Loops through the display menu until user exits the program. 
 def main():
     df_sales = sales_data()
     if df_sales is not None:
         display_menu(df_sales)
 
-
+#Main loop 
 if __name__ == '__main__':
     main()
