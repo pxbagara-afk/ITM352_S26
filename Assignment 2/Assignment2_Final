@@ -53,7 +53,7 @@ Agg_Options = ['sum', 'mean','count']
 #Use A.I to create a function that prints a list of options and returns the string value of the user's numeric choice (A.I prompt: How do I create a function that prints a list of options and returns the string value of the user's numeric choice?)
 #Also Used A.I for logical argument
 def User_choice(options, label):
-    print(f"\nSelect {label} ---")
+    print(f"\nSelect {label}")
     for i, option in enumerate(options, 1):
         print(f"{i}. {option}")
     
