@@ -3,6 +3,7 @@
 import urllib.request
 import ssl
 from bs4 import BeautifulSoup
+import pandas as pd
 
 # Create an SSL context that doesn't verify certificates
 ssl_context = ssl.create_default_context()
@@ -11,16 +12,9 @@ ssl_context.verify_mode = ssl.CERT_NONE
 
 url = "https://www.hicentral.com/hawaii-mortgage-rates.php"
 
-# Build a request with a browser-like User-Agent header.
-request = urllib.request.Request(
-    url,
-    headers={
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-    },
-)
 
 # Open URL and looks at HTML content
-html = urllib.request.urlopen(request, context=ssl_context)
+html = urllib.request.urlopen(urllib.request.request, context=ssl_context)
 html_to_parse = BeautifulSoup(html, "html.parser")
 
 # Find and print just the mortgage rate rows found in <table> tags
@@ -34,13 +28,6 @@ for row in list_of_rows:
     # Extract each table cell's text from the row.
     cells = [cell.get_text(" ", strip=True) for cell in row.find_all("td")]
     
-    # If the row has 5 cells, it's a lender header row
-    if len(cells) == 5:
-        current_lender = cells[0]
-        mortgage_data.append(cells)
-    # If the row has 4 cells, it's a continuation row (reuse current lender)
-    elif len(cells) == 4:
-        mortgage_data.append([current_lender] + cells)
 
     # Print each row as a single pipe-separated string.
     print(" | ".join(cells))
@@ -49,7 +36,7 @@ for row in list_of_rows:
 print("Total rows found:", len(mortgage_data))
 
 #organize the data ito rows and columns (Lender	Term/Type, Interest Rate,% Points,% *APR)
-import pandas as pd
+
 
 # Display all columns and rowws
 pd.set_option('display.max_columns', None)
