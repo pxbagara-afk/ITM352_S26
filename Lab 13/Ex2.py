@@ -2,7 +2,7 @@
 # the user is welcomed.  If not, an error message is displayed.
 from flask import Flask, render_template, request, redirect, url_for
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='Template')
 
 @app.route('/')
 def home():

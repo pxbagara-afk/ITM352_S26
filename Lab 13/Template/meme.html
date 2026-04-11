@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Viewer</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        img { max-width: 100%; height: auto; border-radius: 10px; }
+        h1 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <img src="{{ meme_url }}" alt="Meme">
+    <p><a href="{{ url_for('meme') }}">Get Another Meme</a></p>
+</body>
+</html>
