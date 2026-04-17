@@ -8,7 +8,7 @@ trips_miles_series = trips_df.trip_miles
 
 # create the histogram
 plt.hist(trips_miles_series)
-plt.title("Comparing frequency of trip miles")
+plt.title("The frequency of trip miles")
 plt.xlabel("Trip Miles")
 plt.ylabel("Frequency")
 

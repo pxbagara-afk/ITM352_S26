@@ -14,10 +14,9 @@ non_zero_trips = trips_df[trips_df.trip_miles > 0]
 # filter out trips with less than two miles
 valid_trips = non_zero_trips[non_zero_trips.trip_miles >= 2]
 
-fig = plt.figure() # not strictly necessary
 
 # create 3D scatter plot
-ax = fig.add_subplot(111, projection='3d')
+ax = plt.add_subplot(111, projection='3d')
 
 plt.plot(valid_trips.fare, valid_trips.trip_miles, linestyle='none', marker='.')
 plt.title("trip miles by fare")

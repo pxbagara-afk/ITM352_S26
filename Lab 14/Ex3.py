@@ -5,7 +5,7 @@ import numpy as np
 
 trips_df = pd.read_json("Lab 14/Trips from area 8.json")
 
-# grab the tips and payment type colums from data frame
+# the tips and payment type colums from jsson file
 trips_df = trips_df.dropna()
 trips_df = trips_df[["tips", 'payment_type']]
 trips_df = trips_df.astype({'tips': float})

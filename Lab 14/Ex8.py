@@ -17,7 +17,6 @@ heatmap_data = pd.crosstab(
 plt.figure(figsize=(14, 10))
 
 # 3. Create the heatmap
-# annot=False is used because there are likely too many areas to fit numbers inside cells
 sns.heatmap(
     heatmap_data, 
     cmap="YlGnBu", 
