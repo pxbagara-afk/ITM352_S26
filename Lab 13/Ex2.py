@@ -26,7 +26,7 @@ def success(username):
     return render_template('success.html', username=username)
 
 USERS = {"port": "port123",
-        "kazman": "kazman123"}
+        "Paul": "Paul123"}
 
 
 if __name__ == '__main__':
