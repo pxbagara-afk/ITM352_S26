@@ -1,52 +1,27 @@
 [
   {
     "question": "What is the capital of France?",
-    "options": {
-      "a": "Berlin",
-      "b": "Madrid",
       "c": "Paris",
-      "d": "Rome"
-    },
-    "answer": "c"
+    "options": ["Berlin", "Madrid", "Paris", "Rome"],
+    "answer": "Paris"
   },
   {
     "question": "Which language is primarily used for Android app development?",
-    "options": {
-      "a": "Swift",
-      "b": "Kotlin",
-      "c": "Ruby",
-      "d": "C#"
-    },
-    "answer": "b"
+    "options": ["Swift", "Kotlin", "Ruby", "C#"],
+    "answer": "Kotlin"
   },
   {
     "question": "What does CPU stand for?",
-    "options": {
-      "a": "Central Process Unit",
-      "b": "Central Processing Unit",
-      "c": "Computer Personal Unit",
-      "d": "Control Processing Unit"
-    },
-    "answer": "b"
+    "options": ["Central Process Unit", "Central Processing Unit", "Computer Personal Unit"],
+    "answer": "Central Processing Unit"
   },
   {
     "question": "Which planet is known as the Red Planet?",
-    "options": {
-      "a": "Venus",
-      "b": "Mars",
-      "c": "Jupiter",
-      "d": "Saturn"
-    },
-    "answer": "b"
+    "options": ["Venus", "Mars", "Jupiter", "Saturn"],
+    "answer": "Mars"
   },
   {
     "question": "Which data structure uses FIFO (First In First Out)?",
-    "options": {
-      "a": "Stack",
-      "b": "Tree",
-      "c": "Queue",
-      "d": "Graph"
-    },
-    "answer": "c"
+    "options": ["Stack", "Tree", "Queue", "Graph"],
+    "answer": "Queue"
   }
-]
