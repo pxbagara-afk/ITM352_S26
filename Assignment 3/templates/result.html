@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Final Score</title>
+    <title>Quiz Finished</title>
 </head>
 <body>
-    <h1>Quiz Completed!</h1>
-    <p>Final Score: {{ score }} out of {{ total }}</p>
-    <a href="/">Restart Quiz</a>
+    <h1>Quiz Finished!</h1>
+    
+    <p>
+        Final Score: 
+        <strong>{{ final_score }} out of {{ total_questions }}</strong>
+    </p>
+
+    <hr>
+    <h3>Your Answer Summary:</h3>
+    <ul>
+        {% for item in summary %}
+        <li style="margin-bottom: 10px;">
+            <strong>Question:</strong> {{ item.title }} <br>
+            
+            <strong>You chose:</strong> {{ item.player_choice }} 
+            
+            {% if item.is_correct %}
+                <span style="color: green;">✅ Correct!</span>
+            {% else %}
+                <span style="color: red;">❌ Incorrect</span> <br>
+                <small>The correct answer was: {{ item.correct_answer }}</small>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+    
+    <a href="{{ url_for('home') }}">Back to Home Page</a>
 </body>
 </html>
+
+<!--This is the result page showing the final score for the quiz. 
+Implemented a summary page to show the answer result for the quiz and emphasize the correct and incorrect answer. 
+Used A.I in order to implment the correct vs Incorrect. 
+Prompt was "How to implement a summary page for a quiz in Flask and show correct and incorrect"-->

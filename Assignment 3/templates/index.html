@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Quiz Home</title>
-</head>
-<body>
-    <h1>Welcome to the Quiz</h1>
-    <form action="/set_name" method="POST">
-        <label>Enter Name:</label>
-        <input type="text" name="name" required>
-        <button type="submit">Start</button>
-    </form>
+<h1>Welcome, {{ player_name if player_name else 'Guest' }}!</h1>
 
-    {% if history %}
-    <h3>History:</h3>
+{% if past_game_scores %}
+    <h3>Your History:</h3>
     <ul>
-        {% for entry in history %}
-            <li>Scored {{ entry.score }} / {{ entry.total }}</li>
-        {% endfor %}
+    {% for game in past_game_scores %}
+        <li>Score: {{ game.score }} out of {{ game.total }}</li>
+    {% endfor %}
     </ul>
-    {% endif %}
-</body>
-</html>
+{% endif %}
+
+<form method="POST" action="{{ url_for('start_quiz') }}">
+    <input type="text" name="name" placeholder="Enter Your Name" required>
+    <button type="submit">Start Quiz</button>
+</form>
+
+<!--This is the Home page and shoes the history of scores and welcomes the player with name input otherwise they are guest-->
+<!--Requirement 1:Persistent User Identification and History>

@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <title>Quiz</title>
+    <title>Quiz Page</title>
 </head>
 <body>
-    <h1>Question {{ num }}:</h1>
-    <h2>{{ question }}</h2>
+    <h1>Question {{ question_number }}</h1>
+    
+    <h2>{{ question_text }}</h2>
+
     <form method="POST">
-        {% for option in options %}
-        
-        <input type="radio" name="answer" value="{{ option }}" required>{{ option }}<br>
-        
+        {% for choice in list_of_options %}
+        <label style="display:block; margin-bottom: 10px;">
+            <input type="radio" name="answer" value="{{ choice }}" required> 
+            {{ choice }}
+        </label>
         {% endfor %}
+
         <br>
         <button type="submit">Submit Answer</button>
     </form>
 </body>
 </html>
+
+<!---This is the quiz gage and uses the questions.json in order to display the questions. Had to use A.I in order to display the correct syntax for the code -->

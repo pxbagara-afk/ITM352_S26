@@ -1,26 +1,27 @@
-[
-  {
-    "question": "What is the capital of France?",
+{
+  "What is the capital of France?": {
     "options": ["Berlin", "Madrid", "Paris", "Rome"],
-    "answer": "Paris"
+    "answer": "Paris",
+    "explanation": "Paris has been the capital of France since 508 AD and is known as the 'City of Light'."
   },
-  {
-    "question": "Which language is primarily used for Android app development?",
+  "Which language is primarily used for Android app development?": {
     "options": ["Swift", "Kotlin", "Ruby", "C#"],
-    "answer": "Kotlin"
+    "answer": "Kotlin",
+    "explanation": "While Java was the original language, Google now recommends Kotlin for all Android development."
   },
-  {
-    "question": "What does CPU stand for?",
-    "options": ["Central Process Unit", "Central Processing Unit", "Computer Personal Unit"],
-    "answer": "Central Processing Unit"
+  "What does CPU stand for?": {
+    "options": ["Central Process Unit", "Central Processing Unit", "Computer Personal Unit", "Control Processing Unit"],
+    "answer": "Central Processing Unit",
+    "explanation": "The CPU is often called the 'brain' of the computer because it carries out all instructions."
   },
-  {
-    "question": "Which planet is known as the Red Planet?",
+  "Which planet is known as the Red Planet?": {
     "options": ["Venus", "Mars", "Jupiter", "Saturn"],
-    "answer": "Mars"
+    "answer": "Mars",
+    "explanation": "Mars appears red because its surface is covered in iron oxide, also known as rust."
   },
-  {
-    "question": "Which data structure uses FIFO (First In First Out)?",
+  "Which data structure uses FIFO (First In First Out)?": {
     "options": ["Stack", "Tree", "Queue", "Graph"],
-    "answer": "Queue"
+    "answer": "Queue",
+    "explanation": "A Queue works like a line of people; the first person to enter is the first to leave (FIFO)."
   }
+}

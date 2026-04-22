@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Result</title>
+    
+    <title>Question Result</title>
 </head>
 <body>
-    {% if is_correct %}
-        <h2 style="color: green;">Correct!</h2>
-    {% else %}
-        <h2 style="color: red;">Incorrect</h2>
-        <p>The correct answer was: {{ correct_answer }}</p>
-    {% endif %}
+    <h1>{{ result_text }}</h1>
     
-    <p>Question: {{ question }}</p>
-    <p>Your Answer: {{ user_answer }}</p>
+    <h3>Question: {{ question_text }}</h3>
     
-    <a href="/quiz"><button>Next Question</button></a>
+    <p>Your Answer: {{ player_answer }}</p>
+    <p>Correct Answer:<strong>{{ correct_answer }}</strong></span></p>
+    
+    <p><em>{{ why_it_is_correct }}</em></p>
+    
+    <hr>
+    <a href="{{ url_for('quiz_page') }}" style="font-size: 1.5em;">Next Question →</a>
 </body>
 </html>
+
+<!----This is the question result page and shows the user if answewr is correct or wrong, used A.I in order to help with putting html logic together and where they should go> Prompt was: "Put these in the correct order"
