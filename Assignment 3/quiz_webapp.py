@@ -1,130 +1,142 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from string import ascii_lowercase
 import random
 import json
+import os
 
 app = Flask(__name__)
-# *** ADD SECRET KEY ***
-app.secret_key = 'a_very_secret_and_complex_key_string' 
-# **********************
+app.secret_key = 'a_very_secret_and_complex_key_string'
+
+# --- Path Configuration ---
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DATA_FILE = os.path.join(BASE_DIR, 'user_data.json')
+QUESTION_FILE = os.path.join(BASE_DIR, 'questions.json')
+
+# --- Global State ---
+USER_DATA = {}
+QUESTIONS = {}
+questions_list = []
+question_num = 0
+score = 0
+NUM_QUESTIONS_PER_QUIZ = 10
+
+def load_user_data():
+    global USER_DATA
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'r') as f:
+            try:
+                USER_DATA = json.load(f)
+            except json.JSONDecodeError:
+                USER_DATA = {}
+
+def save_user_data():
+    with open(DATA_FILE, 'w') as f:
+        json.dump(USER_DATA, f, indent=2)
+
+def prepare_questions(all_questions, num_questions):
+    if not all_questions:
+        return []
+    # This picks a random sample of the dictionary items (key-value pairs)
+    num_to_pick = min(num_questions, len(all_questions))
+    selected_items = random.sample(list(all_questions.items()), k=num_to_pick)
+    
+    # item[0] is the Question Text (the key)
+    # item[1] is the dictionary containing 'options' and 'answer'
+    return [(item[0], item[1]['options']) for item in selected_items]
 
 @app.route('/')
 def home():
-    username = session.get('username')
-    history = session.get('history', []) 
-    # *** FIX 1: Pass the session variables to the template ***
+    user_id = session.get('user_id')
+    user_info = USER_DATA.get(user_id, {})
+    username = user_info.get('username')
+    history = user_info.get('history', [])
     return render_template('index.html', username=username, history=history)
 
 @app.route('/set_name', methods=['POST'])
 def set_name():
-    # Save the user's name from the form into the session
-    session['username'] = request.form['name']
-    # Initialize history if it doesn't exist
-    if 'history' not in session:
-        session['history'] = []
+    new_username = request.form.get('name')
+    if not new_username:
+        return redirect(url_for('home'))
+        
+    session['user_id'] = new_username
+    if new_username not in USER_DATA:
+        USER_DATA[new_username] = {'username': new_username, 'history': []}
+    
+    save_user_data()
     return redirect(url_for('quiz'))
 
 @app.route('/quiz', methods=['GET', 'POST'])
 def quiz():
-    global question_num, QUESTIONS, score 
+    global question_num, QUESTIONS, score, questions_list
+    
+    if 'user_id' not in session:
+        return redirect(url_for('home'))
 
-    # *** FIX 2: REMOVED INCORRECT HISTORY LOGIC FROM HERE ***
-
-    # --- POST Request Logic (User Submitting an Answer) ---
     if request.method == 'POST':
-        # The question that was just answered is at index question_num - 1
-        current_q_index = question_num - 1
-        current_q_text = questions[current_q_index][0]
+        current_index = question_num - 1
+        current_text = questions_list[current_index][0]
         
-        # Look up correct data from the master QUESTIONS dictionary
-        correct_answer = QUESTIONS[current_q_text]['answer']
-        q_explanation = QUESTIONS[current_q_text]['explanation']
-        
-        # Process the answer
-        if(request.form.get('answer') == correct_answer):
+        # Use .get() with defaults to avoid KeyErrors
+        correct_answer = QUESTIONS[current_text].get('answer')
+        user_answer = request.form.get('answer')
+
+        if user_answer == correct_answer:
             score += 1
-            the_result = "🥳 Correct! 🥳"
+            the_result = " Correct!"
             feedback_color = "green"
         else:
-            the_result = "🤔 Incorrect 🤔"
+            the_result = "Incorrect"
             feedback_color = "red"
-
-        # Display the result (feedback page)
+            
         return render_template('question_result.html', 
-                               question_result = the_result, 
-                               question = current_q_text, 
-                               answer = request.form.get('answer'), 
-                               correct_answer = correct_answer, # Pass for display
-                               explanation = q_explanation) # Pass for display
-    
-    # --- GET Request Logic (Display Next Question) ---
-    
+                               question_result=the_result, 
+                               question=current_text, 
+                               answer=user_answer, 
+                               correct_answer=correct_answer, 
+                               feedback_color=feedback_color)
+
+    # --- GET Request Logic ---
     question_num += 1 
     
-    # quiz over? then redirect to the result page
-    if(question_num > len(questions)):
+    if question_num > len(questions_list):
         return redirect(url_for('result'))
         
-    current_q_index = question_num - 1
+    current_index = question_num - 1
+    question_text = questions_list[current_index][0]
+    options = questions_list[current_index][1]
     
-    # Get the question and answer options
-    a_question = questions[current_q_index][0]
-    ordered_alternatives = random.sample(questions[current_q_index][1], k=len(questions[current_q_index][1]))
+    # Shuffle options for display
+    shuffled_options = random.sample(options, len(options))
 
-    return render_template('quiz.html', num=question_num, question= a_question, options=ordered_alternatives)
+    return render_template('quiz.html', num=question_num, question=question_text, options=shuffled_options)
 
 @app.route('/result') 
 def result():
-    global score, question_num 
-    if 'history' not in session:
-        session['history'] = []
-        
-    # 2. RECORD THE SCORE
-    # Record the final score before resetting global variables
-    session['history'].append({'score': score, 'total': len(questions)})
+    global score, question_num, questions_list
+    user_id = session.get('user_id')
+    user_info = USER_DATA.get(user_id)
+
+    if user_info:
+        user_info['history'].append({'score': score, 'total': len(questions_list)})
+        save_user_data()
+
+    template = render_template('result.html', score=score, total=len(questions_list))
     
-    # 3. RENDER FINAL PAGE
-    # get the result template (final summary)
-    template = render_template('result.html', score=score, total=len(questions))
-    
-    # 4. RESET GLOBALS (Only used for the next quiz)
     score = 0         
     question_num = 0  
-    
-    # Flask sessions are typically saved automatically, but this ensures it.
-    session.modified = True 
-    
-    return template
+    return template 
 
-# Functions for main processing steps
-def prepare_questions(all_questions, num_questions):
-    num_questions = min(num_questions, len(all_questions))
-    
-    selected_items = random.sample(list(all_questions.items()), k=num_questions)
-    
-    processed_questions = [(q_text, q_data['options']) for q_text, q_data in selected_items]
-    
-    return processed_questions
-
-# Main quiz steps: preparing questions, running the quiz, giving feedback
-# Read in and load the file of quiz questions
-NUM_QUESTIONS_PER_QUIZ = 10
-question_file_path = 'questions.json'
-
-try:
-    with open(question_file_path, 'r') as f:
-        QUESTIONS = json.load(f)
-except FileNotFoundError:
-    print(f"Error: Required file '{question_file_path}' not found.")
-    QUESTIONS = {}
-
-print(f"Loaded {len(QUESTIONS)} questions")
-questions = prepare_questions(QUESTIONS, num_questions=NUM_QUESTIONS_PER_QUIZ)
-print(questions)
-
-question_num = 0  
-score = 0         
-
-# Run the application
 if __name__ == '__main__':
+    load_user_data() 
+    
+    try:
+        if os.path.exists(QUESTION_FILE):
+            with open(QUESTION_FILE, 'r', encoding='utf-8') as f:
+                QUESTIONS = json.load(f)
+            questions_list = prepare_questions(QUESTIONS, NUM_QUESTIONS_PER_QUIZ)
+            print(f"✅ Loaded {len(QUESTIONS)} questions.")
+        else:
+            print(f"⚠️ Warning: {QUESTION_FILE} not found.")
+    except Exception as e:
+        print(f"❌ JSON Error: {e}")
+
     app.run(debug=True, use_reloader=False)
