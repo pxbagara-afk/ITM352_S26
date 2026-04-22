@@ -3,21 +3,21 @@ import random
 from pathlib import Path
 from string import ascii_lowercase
 
-# --- Configuration ---
+# --- Configuration
 QUESTIONS_FILE = "questions.json"
 HISTORY_FILE = "score_history.json"
 NUM_QUESTIONS_PER_QUIZ = 5
 
 def load_questions():
-    """Loads the JSON data safely."""
+    #Loads the JSON data safely.
     try:
         with open(QUESTIONS_FILE, "r") as f:
             return json.load(f)
     except FileNotFoundError:
-        print(f"❌ Error: {QUESTIONS_FILE} not found in this folder.")
+        print(f"Error: {QUESTIONS_FILE} not found in this folder.")
         return None
     except json.JSONDecodeError:
-        print(f"❌ Error: {QUESTIONS_FILE} contains invalid JSON formatting.")
+        print(f"Error: {QUESTIONS_FILE} contains invalid JSON formatting.")
         return None
 
 def get_answer(question_text, options_list):
@@ -73,11 +73,11 @@ def run_quiz():
     selected_questions = random.sample(question_pool, num_to_ask)
     
     score = 0
-
+#Fix for the quiz game. dictionary and list handling. UsEed AI
     for num, item in enumerate(selected_questions, 1):
         print(f"\n--- Question {num} ---")
         
-        # Handle both JSON structures (List or Dictionary)
+
         if isinstance(item, tuple):
             q_text, info = item
         else:
@@ -99,3 +99,4 @@ def run_quiz():
 
 if __name__ == "__main__":
     run_quiz()
+    

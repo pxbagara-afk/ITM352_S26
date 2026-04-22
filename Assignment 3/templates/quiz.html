@@ -1,31 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>ITM352 Quiz</title>
-    <style>
-        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
-        .question-block { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid #ddd; }
-        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; }
-    </style>
+    <title>Quiz</title>
 </head>
 <body>
-    <h1>Assignment 3 Quiz</h1>
-    <form method="POST" action="/quiz">
-        {% for q in questions %}
-            <div class="question-block">
-                <p><strong>Question {{ loop.index }}:</strong> {{ q.question }}</p>
-                
-                {# The 'name' must be unique for each question (e.g., q0, q1, q2) #}
-                {% for option in q.options %}
-                    <label>
-                        <input type="radio" name="q{{ loop.index0 }}" value="{{ loop.index0 }}" required>
-                        {{ option }}
-                    </label><br>
-                {% endfor %}
-            </div>
-        {% endfor %}
+    <h1>Question {{ num }}:</h1>
+    <h2>{{ question }}</h2>
+    <form method="POST">
+        {% for option in options %}
         
-        <button type="submit">Submit My Answers</button>
+        <input type="radio" name="answer" value="{{ option }}" required>{{ option }}<br>
+        
+        {% endfor %}
+        <br>
+        <button type="submit">Submit Answer</button>
     </form>
 </body>
 </html>
