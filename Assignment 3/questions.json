@@ -1,7 +1,6 @@
 [
   {
     "question": "What is the capital of France?",
-      "c": "Paris",
     "options": ["Berlin", "Madrid", "Paris", "Rome"],
     "answer": "Paris"
   },
